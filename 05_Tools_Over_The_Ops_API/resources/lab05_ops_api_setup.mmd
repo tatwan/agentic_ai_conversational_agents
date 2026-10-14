@@ -1,0 +1,23 @@
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 40, "rankSpacing": 45}, "themeVariables": {"fontFamily": "IBM Plex Mono, monospace", "fontSize": "15px", "primaryColor": "#FFFFFF", "primaryBorderColor": "#0B1220", "primaryTextColor": "#0B1220", "lineColor": "#6B7383", "clusterBkg": "#F4F5F7", "clusterBorder": "#0B1220"}}}%%
+%% Lab 05: Ops API setup — calling a local service in a background thread over HTTP.
+%% Export: npx -y @mermaid-js/mermaid-cli -i lab05_ops_api_setup.mmd -o lab05_ops_api_setup.png -b white -s 2
+flowchart LR
+    subgraph SESSION["Your Python Session (Jupyter / Colab)"]
+        direction TB
+        CODE["Your Notebook Code & Tools<br/>Parts A-B: httpx, Part C: agent"]
+        subgraph BG["Background Thread (Port 8765)"]
+            API["Ops API (FastAPI / Uvicorn)<br/>shared/ops_api.py<br/>127.0.0.1:8765"]
+        end
+    end
+    START["start_ops_api()<br/>starts background thread<br/>returns server handle"] -. "starts" .-> API
+    CODE -- "HTTP GET (5s timeout)<br/>/customers, /invoices" --> API
+    API -- "JSON data or 404" --> CODE
+    API -- "SQL query<br/>(read-only)" --> DB[("data/chinook.db<br/>customers, invoices")]
+
+    classDef ink fill:#0B1220,stroke:#0B1220,color:#FFFFFF
+    classDef indigo fill:#D9DDFA,stroke:#3B4AE0,color:#0B1220
+    classDef lime fill:#C9F24D,stroke:#0B1220,color:#0B1220
+    class CODE ink
+    class API indigo
+    class DB lime
+    class START lime
