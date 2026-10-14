@@ -42,8 +42,8 @@ both ways, and every case beside its check.
 **Part F: Read the prompt cache.** A short and a long prompt five times each, with and without a `prompt_cache_key`.
 **Going further.** Reasoning effort and reasoning tokens on `REASONING_MODEL` (empty by default, so it is skipped), `stream_events`
 (v3), tags and metadata, LangSmith, and `ModelCallLimitMiddleware`.
-**Challenge.** A token budget per thread with a handover; make the fast case pass and time it again; how steady the
-spread is over ten runs.
+**Challenge.** From starter cells: make the fast case pass and time it again. Optional: a token budget per thread
+with a handover; how steady the spread is over ten runs.
 
 ## Checkpoints
 
