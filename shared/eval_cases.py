@@ -6,7 +6,7 @@ in Lab 10, change it here too.
 
 A case is a dict: the rep's message (`input`), what a good run does (`want`, for people), the tools that must be called
 with the arguments that matter (`calls`), the tools that must never be called (`never`), text the reply must or
-must not contain (`reply_has`, `reply_lacks`), numbers it must state (`numbers`) or no number at all (`no_numbers`).
+must not contain (`reply_has`, `reply_lacks`), numbers it must state in digits (`numbers`) or no digits at all (`no_numbers`).
 `decision` is the reviewer's reason when a write is rejected; `api_down` asks the runner to point the tools at a
 closed port.
 """
@@ -32,7 +32,7 @@ def check_calls(case, calls):
 
 
 def numbers(text):
-    """Every number the text states, as written: "$1,049.62" gives "1049.62"."""
+    """Every number written in digits: "$1,049.62" gives "1049.62". "seven" in words is not found."""
     return re.findall(r"\d+(?:\.\d+)?", text.replace(",", ""))
 
 

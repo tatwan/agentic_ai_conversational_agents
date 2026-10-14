@@ -154,7 +154,7 @@ def ticket_store():
     return _STORES["tickets"]
 
 
-FILTER_NOTE = ("Only tickets for your own customers and tickets that name no customer are searched; "
+FILTER_NOTE = ("Only tickets for your own customers and tickets shared with every rep are searched; "
                "other reps' tickets are never shown.")
 
 
