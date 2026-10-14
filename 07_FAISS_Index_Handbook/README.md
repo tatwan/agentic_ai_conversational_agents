@@ -43,7 +43,8 @@ four thresholds.
 **Part G: Keep the text and metadata, and filter by rep.** What the index does not store, a filter after the search and
 a filter inside it, and what a vector store takes over.
 **Going further.** BM25 and reciprocal rank fusion by hand; approximate indexes (HNSW, IVF).
-**Challenge.** Reword question 4; split by heading, then by size; test a threshold on new questions.
+**Challenge.** From starter cells: reword question 4 and see whether the wording decides the top file. Optional:
+split by heading, then by size; test a threshold on new questions.
 
 ## Checkpoints
 
