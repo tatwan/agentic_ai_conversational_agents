@@ -45,7 +45,8 @@ evidence, one judge call per case beside your label.
 **Part F: Note tokens and time per case.** One row per case: check, judge, label, model calls, tokens, seconds.
 **Going further.** The judge's quotes checked in code; the judge three times per case; the packaged versions of
 this loop.
-**Challenge.** Fix one failure and run the set again; a case of your own; an approved action that must leave one row.
+**Challenge.** From starter cells: test one proposed improvement on the whole set, and say whether the evidence
+supports keeping it. Optional: a case of your own; an approved action that must leave one row.
 
 ## Checkpoints
 
