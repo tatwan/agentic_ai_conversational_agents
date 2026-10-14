@@ -8,7 +8,7 @@
 
 Make an agent stop before a tool that changes something, show a person the exact call, and continue with their
 decision: approve, edit or reject. The moment that teaches it: the rep asks for a refund because two tracks on
-Helena's invoice 46 skip, and the copilot proposes to refund all nine tracks, 8.91 dollars (11 of 11 runs on
+Helena's invoice 46 skip, and the copilot proposes to refund all nine tracks, 8.91 dollars (12 of 12 runs on
 `gpt-4o-mini`). The reviewer changes the amount to 1.98 before anything runs, and the Ops API files 1.98.
 
 ## What you will learn
@@ -44,8 +44,8 @@ reason; `respond` in one sentence.
 one approval with random keys, one row with a key built from the thread, the invoice and the amount.
 **Going further.** A review screen with a `description` function; a pause kept in a SQLite file across a restart, and
 a decision sent to a mistyped thread.
-**Challenge.** A key from the refund instead of the conversation; two refunds in one step; a rejection without a
-reason.
+**Challenge.** From starter cells: a key from the refund instead of the conversation. Optional: two refunds in one
+step; a rejection without a reason.
 
 ## Checkpoints
 
@@ -54,10 +54,10 @@ reason.
 | Part A | 120.00 on invoice 9003: `201`, `needs_manager`; 150.00: `Not filed: Amount 150.0 exceeds invoice total 120.0`; one row in the table |
 | Part B | after one `get_invoice`, the loop stops with `file_refund_request` for invoice 9003, 120; no new row; after the rejection, a reply about a replacement disc |
 | Part C | the schema without `runtime`; ticket 23 pauses at `file_refund_request` with invoice 175 and 1.98; after approval, a new row: 175, 1.98, `pending_review` |
-| Part D | ticket 21 proposes the full 8.91 (11 of 11 runs); after the edit, the middleware's note and a row for invoice 46 at 1.98; ticket 22 rejected: status `error`, no new row |
+| Part D | ticket 21 proposes the full 8.91 (12 of 12 runs); after the edit, the middleware's note and a row for invoice 46 at 1.98; ticket 22 rejected: status `error`, no new row |
 | Part E | random keys: one approval, two rows for invoice 9002 at 9.99; key from the request: one row, the retry answered with `"replayed":true` |
 
-The saved outputs come from `gpt-4o-mini` on 12 Oct 2026 (Python 3.13.5, macOS, a fresh `uv sync`). Part A gives the
+The saved outputs come from `gpt-4o-mini` on 13 Oct 2026 (Python 3.13.5, macOS, a fresh `uv sync`). Part A gives the
 same values every time. Model runs vary, and differ again if `models.env` names another model: compare the calls,
 the amounts and the rows in the table, not our wording.
 
