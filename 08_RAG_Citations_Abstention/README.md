@@ -44,7 +44,8 @@ the made-up answer that passes the citation check.
 **Part G: Catch a citation that does not support its claim.** A quote for every claim, looked up in its passage, with
 the agent filling a `CitedAnswer`.
 **Going further.** The whole handbook in the prompt with cached tokens counted; the same search on Qdrant.
-**Challenge.** A score threshold, a search limited to some sections, and new test questions.
+**Challenge.** From starter cells: a score threshold that abstains before any model call. Optional: a search limited
+to some sections, and new test questions.
 
 ## Checkpoints
 
