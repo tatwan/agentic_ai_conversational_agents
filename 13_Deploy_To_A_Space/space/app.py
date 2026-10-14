@@ -37,6 +37,8 @@ SEARCH_DOWN = ("The ticket search is not available right now. "
 SAFE_REPLY = "This reply failed a safety check and is not shown. Read the ticket in the ticket system."
 SAFE_MESSAGE = ("The copilot is unavailable right now. Your message is saved; "
                 "try again in a minute or handle this ticket by hand.")
+STILL_WAITING = ("A refund is waiting for your decision. The copilot can answer nothing else on this thread "
+                 "until you decide.")
 
 
 def build_copilot():
@@ -71,29 +73,43 @@ def tool_step(message):
 
 
 def decision(message):
-    # "approve" approves; anything else rejects, with the rep's words as the reason.
-    if message.strip().lower() == "approve":
+    # "approve", "reject" or "reject: reason" as a decision; None for any other message.
+    text = message.strip()
+    if text.lower() == "approve":
         return {"type": "approve"}
-    return {"type": "reject", "message": f"Rejected by the rep: {message}. Do not file anything; "
-                                         "tell the rep what you found."}
+    if text.lower() == "reject" or text.lower().startswith("reject:"):
+        reason = text[len("reject"):].lstrip(":").strip() or "no reason given"
+        return {"type": "reject", "message": f"Rejected by the rep: {reason}. Do not file anything; "
+                                             "tell the rep what you found."}
+    return None
+
+
+def next_turn(message, waiting):
+    # What the copilot gets next: a new request, or a decision on the waiting write; None when it is neither.
+    if not waiting:
+        return {"messages": [{"role": "user", "content": message}]}
+    chosen = decision(message)
+    if chosen is None:
+        return None
+    return Command(resume={"decisions": [chosen] * len(waiting[0].value["action_requests"])})
 
 
 def approval_message(interrupts):
-    # The waiting write, in words, with an Approve button.
+    # The waiting write, in words, with an Approve and a Reject button.
     asks = [ask for interrupt in interrupts for ask in interrupt.value["action_requests"]]
     text = "; ".join(f"{ask['name']} {ask['args']}" for ask in asks)
-    return gr.ChatMessage(content=f"Waiting for your approval: {text}. Approve, or type why not.",
-                          options=[{"value": "approve", "label": "Approve"}])
+    return gr.ChatMessage(content=f"Waiting for your approval: {text}. Approve or Reject, or type reject: and "
+                                  "your reason.",
+                          options=[{"value": "approve", "label": "Approve"}, {"value": "reject", "label": "Reject"}])
 
 
 def respond(message, history, request: gr.Request):
     cfg = {"configurable": {"thread_id": request.session_hash}}
     waiting = copilot.get_state(cfg).interrupts
-    if waiting:                     # the message is the rep's decision on the waiting write
-        count = len(waiting[0].value["action_requests"])
-        turn = Command(resume={"decisions": [decision(message)] * count})
-    else:                           # the message is a new request
-        turn = {"messages": [{"role": "user", "content": message}]}
+    turn = next_turn(message, waiting)
+    if turn is None:                # a write waits and this is no decision: remind the rep, leave the thread alone
+        yield [gr.ChatMessage(content=STILL_WAITING), approval_message(waiting)]
+        return
     shown = []
     try:
         for item in copilot.stream(turn, cfg, context=REP, stream_mode="messages", version="v2"):

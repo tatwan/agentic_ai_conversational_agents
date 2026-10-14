@@ -35,25 +35,27 @@ with one thread id for everyone, then with the visitor's session as the thread; 
 **Part C: Stream progress, and hold the reply until its check passes.** A page that streams the reply word by word,
 and one that streams the tool steps as folded messages and shows the reply after Lab 12's check; a scripted model
 that always obeys ticket 16 shows what each page puts on the screen.
-**Part D: Approve a refund inside the chat.** The page function that joins every piece: a waiting refund with an
-Approve button, one approval, one rejection with a typed reason, the API read back, and a reload while a refund waits.
+**Part D: Approve a refund inside the chat.** The page function that joins every piece: a waiting refund with
+Approve and Reject buttons, one approval, a question while a refund waits (the page reminds the rep and leaves the
+thread alone), one rejection with a typed reason, the API read back, and a reload while a refund waits.
 **Part E: Keep the key secret and put a password on the page.** Where the key lives, and a sign-in checked from code.
 **Part F: Prepare the folder a Space builds from.** The template in `space/` and its header, the app checked against
 the notebook, the folder assembled and checked, and `app.py` run as the Space runs it, without and with a key. The
 push is optional.
 **Going further.** A public share link behind a password, and the folder check on a broken copy.
-**Challenge.** Keep a waiting refund across a reload with a sign-in; check the reply a sentence at a time.
+**Challenge.** From starter cells: keep a waiting refund across a reload with a sign-in, and read each visitor's
+thread. Optional: check the reply a sentence at a time.
 
 ## Checkpoints
 
 | After | You should see |
 |---|---|
 | Part A | the echo page counting 0, then 2, for one visitor and 0 for a new one; one session id per visitor |
-| Part B | with one thread for everyone, rep B's reply naming Helena Holý, whom only rep A asked about (ours: 5 of 5 runs); with the session as the thread, rep B asked for a customer (0 of 5 named her) |
-| Part C | word by word, the first words after a few seconds (ours: 4.4 s), and the scripted model's planted string shown before the check replaced it; with the tool steps streamed, a folded step first (ours: 1.5 s), the reply whole, and the scripted string never shown |
-| Part D | ticket 14 paused with a refund for one invoice (ours: 9.99 for invoice 9002) and an Approve button; *approve* filing it as `pending_review`; a typed reason filing nothing; after a reload, nothing filed |
+| Part B | with one thread for everyone, rep B's reply naming Helena Holý, whom only rep A asked about (ours: 6 of 6 runs); with the session as the thread, rep B asked for a customer (0 of 6 named her) |
+| Part C | word by word, the first words after a few seconds (ours: 4.3 s), and the scripted model's planted string shown before the check replaced it; with the tool steps streamed, a folded step first (ours: 1.4 s), the reply whole, and the scripted string never shown |
+| Part D | ticket 14 paused with a refund for one invoice (ours: 9.99 for invoice 9002), with Approve and Reject buttons; *approve* filing it as `pending_review`; a question while it waits getting the page's reminder; *reject:* with a reason filing nothing; after a reload, nothing filed |
 | Part E | without the password, 401 and `AuthenticationError`; with it, a reply that greets `jane` |
-| Part F | the header with `sdk: gradio`, `sdk_version: 6.29.0`, `python_version: "3.13"`, `app_file: app.py`; six functions the same in the notebook and `app.py`; 55 files and no problems; without a key a page that says so; with the key a reply from the folder |
+| Part F | the header with `sdk: gradio`, `sdk_version: 6.29.0`, `python_version: "3.13"`, `app_file: app.py`; seven functions the same in the notebook and `app.py`; 55 files and no problems; without a key a page that says so; with the key a reply from the folder |
 
 The saved outputs come from `gpt-4o-mini` on 13 Oct 2026 (`omni-moderation-latest`, `text-embedding-3-small`, Gradio
 6.29.0; Python 3.13.5, macOS, a fresh `uv sync`). Parts A, E and F give the same results every run; replies and
