@@ -1,0 +1,32 @@
+# Instructor and working material: stays on Tarek's machine, never in the student repo
+instructor/
+progress/
+AGENTS.md
+CLAUDE.md
+# **/solved/
+archive/
+slides/
+*.pptx
+
+# Secrets and environments
+.env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+*.pyc
+.DS_Store
+.claude/
+.codex*/
+
+# Lab 02 writes the learner's prompt versions here
+02_Dialogue_Prompt_Versions/prompts/
+
+# Lab 03 keeps its threads in a SQLite file here
+03_Thread_Memory_Three_Settings/threads.sqlite*
+
+# Lab 05 writes the learner's own index here
+07_FAISS_Index_Handbook/my_index/
+
+
+uv.lock
